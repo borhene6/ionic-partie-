@@ -1,0 +1,7 @@
+{
+  "name": "borhenetekupproject",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite"
+}
