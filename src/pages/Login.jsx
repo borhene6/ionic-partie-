@@ -21,6 +21,8 @@ import { useHistory } from 'react-router';
 const Login = () => {
   const [cred, setCred] = useState({ password: null, username: null });
   const history = useHistory();
+
+  // Fonction pour mettre à jour l'état lorsqu'un champ du formulaire est modifié
   const onChange = (e) => {
     const { name, value } = e;
     setCred((prevCred) => ({
@@ -28,16 +30,20 @@ const Login = () => {
       [name]: value,
     }));
   };
-  const handleSubmit = async() => {
+
+  // Fonction pour gérer la soumission du formulaire de connexion
+  const handleSubmit = async () => {
     try {
-              if(cred.password && cred.username){
-      const response = await api.get(`/getuser/${cred.username}/${cred.password}`,);
-      console.log('response.data :>> ', response.data);
-      if(response.data){
-        console.log('response.data :>> ', response.data);
-        history.push(`/annList/${response.data?._id}`);
+      // Vérifier si les champs du formulaire sont renseignés
+      if (cred.password && cred.username) {
+        // Appel à l'API pour vérifier les informations d'identification
+        const response = await api.get(`/getuser/${cred.username}/${cred.password}`);
+        
+        // Si les informations d'identification sont valides, rediriger l'utilisateur vers la liste d'annonces
+        if (response.data) {
+          history.push(`/annList/${response.data?._id}`);
+        }
       }
-    }
     } catch (error) {
       console.error(error);
     }
@@ -52,34 +58,41 @@ const Login = () => {
       </IonHeader>
       <IonContent className="ion-padding">
         <IonGrid>
+          {/* Champ de saisie du nom d'utilisateur */}
           <IonRow>
             <IonCol>
               <IonItem>
-                <IonLabel position="stacked">Username</IonLabel>
-                <IonInput  onIonChange={(e)=>{onChange({name:'username',value:e.detail.value})}} type="text" name="username"></IonInput>
+                <IonLabel position="stacked">Nom d'utilisateur</IonLabel>
+                <IonInput onIonChange={(e) => { onChange({ name: 'username', value: e.detail.value }) }} type="text" name="username"></IonInput>
               </IonItem>
             </IonCol>
           </IonRow>
+
+          {/* Champ de saisie du mot de passe */}
           <IonRow>
             <IonCol>
               <IonItem>
-                <IonLabel position="stacked">Password</IonLabel>
-                <IonInput onIonChange={(e)=>{onChange({name:'password',value:e.detail.value})}} type="password" name="password"></IonInput>
+                <IonLabel position="stacked">Mot de passe</IonLabel>
+                <IonInput onIonChange={(e) => { onChange({ name: 'password', value: e.detail.value }) }} type="password" name="password"></IonInput>
               </IonItem>
             </IonCol>
           </IonRow>
+
+          {/* Bouton de connexion */}
           <IonRow>
             <IonCol>
               <IonButton expand="block" onClick={handleSubmit}>
-                Login
+                Connexion
               </IonButton>
             </IonCol>
           </IonRow>
+
+          {/* Bouton pour rediriger vers la page d'inscription */}
           <IonRow>
             <IonCol>
               <IonButton expand="block" fill="clear" routerLink="/register">
                 <IonIcon slot="start" icon={person}></IonIcon>
-                Don't have an account?
+                Vous n'avez pas de compte ?
               </IonButton>
             </IonCol>
           </IonRow>

@@ -18,52 +18,68 @@ import api from '../axios';
 const AddAnnouncementPage = () => {
   const history = useHistory();
 
-  const {id } = useParams();
-  const [ann, setAnn] = useState({ name: null, description: null ,user:id });
+  // Utilisation de useParams pour obtenir l'ID de l'utilisateur depuis l'URL
+  const { id } = useParams();
+
+  // Utilisation de useState pour gérer l'état des données du formulaire
+  const [ann, setAnn] = useState({ name: null, description: null, user: id });
+
+  // Fonction pour mettre à jour l'état lorsqu'un champ du formulaire est modifié
   const onChange = (e) => {
     const { name, value } = e;
     setAnn((prevCred) => ({
       ...prevCred,
       [name]: value,
     }));
-  }; 
-  const handleSubmit = async() => {
+  };
+
+  // Fonction pour gérer la soumission du formulaire
+  const handleSubmit = async () => {
     try {
-              if(ann.name && ann.description){
-      const response = await api.post('/addann',ann);
-    
-      if(response.data){
-        history.goBack()
+      // Vérifier si les champs du formulaire sont renseignés
+      if (ann.name && ann.description) {
+        // Appel à l'API pour ajouter une annonce
+        const response = await api.post('/addann', ann);
+
+        // Si la réponse est réussie, rediriger l'utilisateur
+        if (response.data) {
+          history.goBack();
+        }
       }
-    }
     } catch (error) {
       console.error(error);
     }
   };
- return (
+
+  return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Add Announcement</IonTitle>
+          <IonTitle>Ajouter une annonce</IonTitle>
         </IonToolbar>
       </IonHeader>
 
       <IonContent>
+        {/* Champ de saisie du titre de l'annonce */}
         <IonItem>
-          <IonLabel position="stacked">Title</IonLabel>
-          <IonInput type="text" onIonChange={(e)=>{onChange({name:'name',value:e.detail.value})}} name='name'/>
+          <IonLabel position="stacked">Titre</IonLabel>
+          <IonInput type="text" onIonChange={(e) => { onChange({ name: 'name', value: e.detail.value }) }} name='name' />
         </IonItem>
+
+        {/* Champ de saisie du contenu de l'annonce */}
         <IonItem>
-          <IonLabel position="stacked">Content</IonLabel>
-          <IonInput type="text"  onIonChange={(e)=>{onChange({name:'description',value:e.detail.value})}}  name="description" />
+          <IonLabel position="stacked">Contenu</IonLabel>
+          <IonInput type="text" onIonChange={(e) => { onChange({ name: 'description', value: e.detail.value }) }} name="description" />
         </IonItem>
+
+        {/* Bouton pour soumettre le formulaire */}
         <IonButton onClick={handleSubmit} expand="block" >
-          <IonIcon  slot="start" icon={addCircle} />
-          Save Announcement
+          <IonIcon slot="start" icon={addCircle} />
+          Sauvegarder l'annonce
         </IonButton>
       </IonContent>
     </IonPage>
- );
+  );
 };
 
 export default AddAnnouncementPage;

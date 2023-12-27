@@ -4,45 +4,49 @@ import { arrowBack, arrowForward } from 'ionicons/icons';
 import api from '../axios';
 
 const AllAnnouncements = () => {
-  const [announcements,setAnnouncements]=useState([])
-  
-useEffect(()=>{
- 
-   loadAnoun()
-},[])
-const loadAnoun=async()=>{
-  try {
-   
-const response = await api.get(`/allann`,);
+  const [announcements, setAnnouncements] = useState([]);
 
+  // Utilisation de useEffect pour charger les annonces au chargement de la page
+  useEffect(() => {
+    loadAnnouncements();
+  }, []);
 
-if(response.data){
-  setAnnouncements(response.data)
+  // Fonction asynchrone pour charger les annonces depuis l'API
+  const loadAnnouncements = async () => {
+    try {
+      const response = await api.get(`/allann`);
 
-}
-} catch (error) {
-console.error(error);
-}
-}
+      // Mettre à jour l'état avec les annonces récupérées depuis l'API
+      if (response.data) {
+        setAnnouncements(response.data);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
- return (
+  return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
+          {/* Bouton de retour vers la page d'accueil */}
           <IonButton slot="start" routerLink="/home">
             <IonIcon slot="icon-only" icon={arrowBack} />
           </IonButton>
-          <IonTitle>AllAnnouncements</IonTitle>
+          <IonTitle>Toutes les annonces</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
+        {/* Liste d'annonces à afficher */}
         <IonList>
-          {announcements.map(announcement => (
+          {announcements.map((announcement) => (
             <IonItem key={announcement.id}>
               <IonLabel>
+                {/* Titre et description de l'annonce */}
                 <h2>{announcement.title}</h2>
                 <p>{announcement.description}</p>
               </IonLabel>
+              {/* Bouton de redirection vers la page d'une annonce spécifique */}
               <IonButton slot="end" routerLink={`/announcements/${announcement.id}`}>
                 <IonIcon slot="icon-only" icon={arrowForward} />
               </IonButton>
@@ -51,7 +55,7 @@ console.error(error);
         </IonList>
       </IonContent>
     </IonPage>
- );
+  );
 };
 
 export default AllAnnouncements;

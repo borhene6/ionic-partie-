@@ -3,49 +3,55 @@ import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonGrid, IonRow, 
 import { useHistory, useParams } from 'react-router';
 
 const Categories = () => {
- const history = useHistory();
- const {id } = useParams();
- const navigateToCategory1 = () => {
+  const history = useHistory();
+  const { id } = useParams();
+
+  // Fonction de redirection vers la catégorie "Your Anouncements"
+  const navigateToCategory1 = () => {
     history.push(`/cat/${id}`);
- }
+  }
 
- const navigateToCategory2 = () => {
+  // Fonction de redirection vers la catégorie "All Anouncements"
+  const navigateToCategory2 = () => {
     history.push(`/all`);
- }
+  }
 
- return (
+  return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Choose a Category</IonTitle>
+          <IonTitle>Choisissez une catégorie</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
         <IonGrid>
+          {/* Première ligne avec la catégorie "Your Anouncements" */}
           <IonRow>
             <IonCol>
               <IonCard button onClick={navigateToCategory1}>
                 <IonCardHeader>
-                 <IonCardTitle>Your Anouncments</IonCardTitle>
+                  <IonCardTitle>Vos Annonces</IonCardTitle>
                 </IonCardHeader>
-                <IonCardContent>Your Anouncments</IonCardContent>
+                <IonCardContent>Vos Annonces</IonCardContent>
               </IonCard>
             </IonCol>
           </IonRow>
+
+          {/* Deuxième ligne avec la catégorie "All Anouncements" */}
           <IonRow>
             <IonCol>
               <IonCard button onClick={navigateToCategory2}>
                 <IonCardHeader>
-                 <IonCardTitle>All Anouncments</IonCardTitle>
+                  <IonCardTitle>Toutes les Annonces</IonCardTitle>
                 </IonCardHeader>
-                <IonCardContent>All Anouncments</IonCardContent>
+                <IonCardContent>Toutes les Annonces</IonCardContent>
               </IonCard>
             </IonCol>
           </IonRow>
         </IonGrid>
       </IonContent>
     </IonPage>
- );
+  );
 };
 
 export default Categories;
