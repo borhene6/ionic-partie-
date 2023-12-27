@@ -21,6 +21,15 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import Register from './pages/Register';
+import Login from './pages/Login';
+import Categories from './pages/Categories';
+
+
+import Announcements from './pages/Announcements';
+import AllAnnouncements from './pages/AllAnnouncements';
+import AddAnnouncementPage from './pages/AddAnouncments';
+
 
 setupIonicReact();
 
@@ -28,11 +37,23 @@ const App = () => (
   <IonApp>
     <IonReactRouter>
       <IonRouterOutlet>
-        <Route exact path="/home">
-          <Home />
-        </Route>
         <Route exact path="/">
-          <Redirect to="/home" />
+          <Login />
+        </Route>
+        <Route exact path="/register">
+          <Register />
+        </Route>
+        <Route exact path="/annList/:id">
+          <Categories  />
+        </Route>
+        <Route exact path="/cat/:id">
+          <Announcements />
+        </Route>
+        <Route exact path="/all">
+          <AllAnnouncements />
+        </Route>
+        <Route exact path="/add/:id">
+          <AddAnnouncementPage />
         </Route>
       </IonRouterOutlet>
     </IonReactRouter>
